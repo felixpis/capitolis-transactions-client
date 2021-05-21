@@ -1,24 +1,20 @@
-import logo from './logo.svg';
+import styled from 'styled-components';
 import './App.css';
+import TransactionsList from './components/TransactionsList';
+
+const Container = styled.div`
+  margin: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <TransactionsList title="Paying" items={[]} />
+      <TransactionsList title="Receiving" items={[]} />
+    </Container>
   );
 }
 
