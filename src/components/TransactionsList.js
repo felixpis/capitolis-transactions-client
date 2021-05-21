@@ -15,9 +15,9 @@ const TransactionsList = ({title, items}) => {
       <h2>
         {title}
       </h2>
-      <Table dataSource={items}>
+      <Table dataSource={items} bordered={true} rowKey="_id" pagination={false}>
         <Table.Column title="Counterparty name" dataIndex="counterParty" />
-        <Table.Column title="Amount" dataIndex="amount" />
+        <Table.Column title="Amount" dataIndex="amount" render={text => `$${text}`} />
       </Table>
     </div>
   )
