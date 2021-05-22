@@ -5,6 +5,8 @@ import * as transactionsApi from './api/transactions';
 import './App.css';
 import NewTransaction from './components/NewTransaction';
 import TransactionsList from './components/TransactionsList';
+import { compress } from './services/compress';
+import { exportToCsv } from './services/export-csv';
 
 const Root = styled.div`
   margin: 50px;
@@ -16,6 +18,7 @@ const Container = styled.div`
 `;
 
 function App() {
+  /** @type {[Transaction[], (items: Transaction[]) => void]} */
   const [items, setItems] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   useEffect(() => {
@@ -36,6 +39,11 @@ function App() {
     setShowAdd(false);
   }
 
+  const handleCompress = () => {
+    const result = compress(items);
+    exportToCsv(result);
+  }
+
   const payingTransactions = useMemo(() => items.filter(item => item.amount < 0).map(item => ({...item, amount: -item.amount})), [items]);
   const receivingTransactions = useMemo(() => items.filter(item => item.amount > 0), [items]);
   return (
@@ -46,6 +54,7 @@ function App() {
       </Container>
       <div>
         <Button type="primary" shape="round" size="large" onClick={handleOpenAdd}>Add transaction</Button>
+        <Button type="primary" shape="round" size="large" onClick={handleCompress}>Compress transactions</Button>
       </div>
       <NewTransaction visible={showAdd} onClose={handleCloseAdd} />
     </Root>
