@@ -59,6 +59,10 @@ function App() {
   }
 
   const handleCompress = () => {
+    if (items.length === 0) {
+      notification.warning({message: 'No transactions to compress'});
+      return;
+    }
     const result = compress(items);
     exportToCsv(result);
   }
