@@ -1,6 +1,7 @@
 import { Button, notification } from 'antd';
 import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import { PlusCircleOutlined, CompressOutlined } from '@ant-design/icons'
 import * as transactionsApi from './api/transactions';
 import './App.css';
 import NewTransaction from './components/NewTransaction';
@@ -9,12 +10,30 @@ import { compress } from './services/compress';
 import { exportToCsv } from './services/export-csv';
 
 const Root = styled.div`
-  margin: 50px;
+  padding: 50px;
 `;
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 30px;
+  grid-template-rows: 1fr auto;
+  gap: 30px;
+  height: calc(100vh - 100px);
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+`;
+
+const Actions = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 3;
+  justify-self: center;
+  button {
+    margin: 10px;
+  }
+  @media (max-width: 600px) {
+    grid-column-end: 2;
+  }
 `;
 
 function App() {
@@ -51,11 +70,11 @@ function App() {
       <Container>
         <TransactionsList title="Paying" items={payingTransactions} />
         <TransactionsList title="Receiving" items={receivingTransactions} />
+        <Actions>
+          <Button icon={<PlusCircleOutlined />} type="primary" shape="round" size="large" onClick={handleOpenAdd}>Add transaction</Button>
+          <Button icon={<CompressOutlined />} type="primary" shape="round" size="large" onClick={handleCompress}>Compress transactions</Button>
+        </Actions>
       </Container>
-      <div>
-        <Button type="primary" shape="round" size="large" onClick={handleOpenAdd}>Add transaction</Button>
-        <Button type="primary" shape="round" size="large" onClick={handleCompress}>Compress transactions</Button>
-      </div>
       <NewTransaction visible={showAdd} onClose={handleCloseAdd} />
     </Root>
   );
