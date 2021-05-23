@@ -1,0 +1,13 @@
+{
+    "deploy": {
+        "production": {
+            "user": "felixp",
+            "host": "37.139.22.221",
+            "ref": "origin/master",
+            "repo": "https://github.com/felixpis/capitolis-transactions-client.git",
+            "path": "/home/felixp/sites/capitolis/capitolis-transactions-client",
+            "pre-deploy-local": "echo 'Started to deploy'",
+            "post-deploy": "npm install && npm run build"
+        }
+    }
+}
