@@ -11,3 +11,7 @@ const getData = response => response.data;
 export function login(userName) {
     return axios.post(`${AUTH_URL}/login`, {userName}).then(getData);
 }
+
+export function me() {
+  return axios.get(`${AUTH_URL}/me`).then(getData);
+}
